@@ -17,6 +17,9 @@ export default defineConfig({
     tanstackStart({
       // Pre-render the public manual for SSG-grade performance.
       prerender: { enabled: true, crawlLinks: true },
+      // The detached map windows open via window.open (no crawlable <a>),
+      // so list them explicitly to get static HTML on a static host.
+      pages: [{ path: '/map/fr' }, { path: '/map/en' }],
     }),
     viteReact(),
   ],
