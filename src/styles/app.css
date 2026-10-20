@@ -1,0 +1,274 @@
+/* =====================================================================
+   PurpleBreachNode — root stylesheet (index.css)
+   Aesthetic: "ApplePunk" / Synthwave — charcoal & aubergine surfaces,
+   neon cyan / magenta / lavender / Dijon-gold accents. NO white or navy.
+   Tailwind v4, CSS-first. JS config (textures/keyframes) loaded via @config.
+   ===================================================================== */
+
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+@config '../../tailwind.config.ts';
+
+/* Dark-only app: tell Tailwind variants we are always in the dark class. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------------
+   Fonts. Pixel/8-bit for H1/H2 + logos; technical mono for body + code.
+   Loaded from Google Fonts in src/routes/__root.tsx <head> with preconnect.
+   --------------------------------------------------------------------- */
+
+@theme {
+  /* ---- Surfaces: anthracite / charbon / aubergine (never navy) ---- */
+  --color-char-950: #0d0418; /* deepest */
+  --color-char-900: #140826; /* app background */
+  --color-char-800: #1a053a; /* raised panels (brand aubergine) */
+  --color-char-700: #241046; /* cards */
+  --color-char-600: #2e1657; /* borders / hovers */
+  --color-char-500: #3a1d6b; /* muted lines */
+
+  /* ---- Neon accents ---- */
+  --color-neon-cyan: #00ffff; /* terminal cyan */
+  --color-neon-magenta: #ff007f; /* neon magenta — user input */
+  --color-neon-gold: #ffd700; /* Dijon gold */
+  --color-neon-lavender: #b794f6; /* lavender */
+  --color-neon-orange: #ff8a00; /* synth-sun mid */
+
+  /* ---- Text ---- */
+  --color-ink: #e9e2ff; /* primary text (soft lavender-white, not #fff) */
+  --color-ink-dim: #a99fc9; /* secondary text */
+  --color-ink-faint: #6f6690; /* captions / machine output */
+
+  /* ---- Callout tints (translucent neon washes) ---- */
+  --color-why: #39d98a; /* POURQUOI / WHY — green */
+  --color-trap: #ffbf3f; /* PIÈGE / TRAP — amber */
+  --color-reme: #7cc7ff; /* REMÉDIATION / REMEDIATION — cyan-blue */
+  --color-exercise: #ff5fb0; /* EXERCICE / EXERCISE — pink */
+
+  /* ---- Level badges ---- */
+  --color-lvl-novice: #39d98a;
+  --color-lvl-inter: #ff007f;
+  --color-lvl-expert: #b794f6;
+  --color-lvl-veteran: #ffd700;
+
+  /* ---- Fonts ---- */
+  --font-pixel: 'Press Start 2P', 'VT323', ui-monospace, monospace;
+  --font-crt: 'VT323', ui-monospace, monospace;
+  --font-mono: 'Share Tech Mono', ui-monospace, 'SFMono-Regular', monospace;
+  --font-display: 'Orbitron', 'Share Tech Mono', ui-sans-serif, sans-serif;
+
+  /* ---- Radii ---- */
+  --radius-win: 0.5rem;
+}
+
+/* ---------------------------------------------------------------------
+   Base layer
+   --------------------------------------------------------------------- */
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-char-900);
+    background-image: var(--tw-bg-carbon, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Crect width='8' height='8' fill='%23140826'/%3E%3Cpath d='M0 0h4v4H0zM4 4h4v4H4z' fill='%231d0c33' fill-opacity='0.55'/%3E%3C/svg%3E"));
+    color: var(--color-ink);
+    font-family: var(--font-mono);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    min-height: 100dvh;
+  }
+
+  h1,
+  h2 {
+    font-family: var(--font-pixel);
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+  }
+
+  h3,
+  h4,
+  h5 {
+    font-family: var(--font-display);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  a {
+    color: var(--color-neon-cyan);
+    text-decoration: none;
+  }
+  a:hover {
+    color: var(--color-neon-gold);
+  }
+
+  code,
+  kbd,
+  pre {
+    font-family: var(--font-mono);
+  }
+
+  ::selection {
+    background: var(--color-neon-magenta);
+    color: var(--color-char-950);
+  }
+
+  /* Neon scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-char-600) transparent;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Component layer — reusable ApplePunk primitives
+   --------------------------------------------------------------------- */
+@layer components {
+  /* Neon-bordered surface */
+  .pbn-panel {
+    background-color: color-mix(in oklab, var(--color-char-800) 92%, transparent);
+    border: 1px solid var(--color-char-600);
+    border-radius: var(--radius-win);
+    backdrop-filter: blur(2px);
+  }
+
+  /* Fake terminal window chrome */
+  .pbn-terminal {
+    border: 1px solid var(--color-char-600);
+    border-radius: var(--radius-win);
+    background: linear-gradient(180deg, #0f0620 0%, #0b0418 100%);
+    box-shadow:
+      inset 0 0 0 1px rgba(0, 255, 255, 0.05),
+      0 10px 40px -12px rgba(0, 0, 0, 0.8);
+    overflow: hidden;
+  }
+  .pbn-terminal__bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.75rem;
+    background: #130826;
+    border-bottom: 1px solid var(--color-char-600);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--color-ink-faint);
+  }
+  .pbn-terminal__dot {
+    width: 0.62rem;
+    height: 0.62rem;
+    border-radius: 9999px;
+  }
+  .pbn-terminal__body {
+    padding: 0.9rem 1rem;
+    font-size: 0.86rem;
+    line-height: 1.6;
+    overflow-x: auto;
+  }
+  /* user-typed input = magenta bold; machine output = neutral grey */
+  .pbn-in {
+    color: var(--color-neon-magenta);
+    font-weight: 700;
+  }
+  .pbn-out {
+    color: var(--color-ink-faint);
+  }
+  .pbn-prompt {
+    color: var(--color-neon-cyan);
+  }
+  .pbn-comment {
+    color: #5a5278;
+    font-style: italic;
+  }
+  .pbn-cursor {
+    display: inline-block;
+    width: 0.55em;
+    height: 1.05em;
+    translate: 0 0.18em;
+    background: var(--color-neon-cyan);
+    animation: cursor-blink 1.1s steps(1) infinite;
+  }
+
+  /* Level badge pill */
+  .pbn-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 9999px;
+    font-family: var(--font-display);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1px solid currentColor;
+  }
+
+  /* Callout box with left neon rule (WHY / TRAP / REMEDIATION / READ) */
+  .pbn-callout {
+    border-left: 3px solid var(--callout-accent, var(--color-neon-lavender));
+    background: color-mix(in oklab, var(--callout-accent, var(--color-neon-lavender)) 9%, var(--color-char-800));
+    border-radius: 0 var(--radius-win) var(--radius-win) 0;
+    padding: 0.85rem 1rem;
+  }
+  .pbn-callout__title {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--callout-accent, var(--color-neon-lavender));
+  }
+
+  /* CRT scanline overlay (decorative, pointer-events off) */
+  .pbn-scanlines::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0) 0,
+      rgba(0, 0, 0, 0) 2px,
+      rgba(0, 0, 0, 0.14) 3px
+    );
+    mix-blend-mode: multiply;
+  }
+
+  /* Neon focus ring for keyboard users */
+  .pbn-focusable:focus-visible {
+    outline: 2px solid var(--color-neon-cyan);
+    outline-offset: 2px;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Prose overrides for module content (Tailwind Typography, dark neon)
+   --------------------------------------------------------------------- */
+@layer components {
+  .prose-pbn {
+    --tw-prose-body: var(--color-ink);
+    --tw-prose-headings: var(--color-ink);
+    --tw-prose-links: var(--color-neon-cyan);
+    --tw-prose-bold: var(--color-ink);
+    --tw-prose-code: var(--color-neon-gold);
+    --tw-prose-quotes: var(--color-ink-dim);
+    --tw-prose-bullets: var(--color-neon-magenta);
+    --tw-prose-hr: var(--color-char-600);
+    max-width: 72ch;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": "purplebreachnode",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "PurpleBreachNode — The Offensive Security Field Manual",
+  "author": "Sebastien Germain (Seub G.) <lead@seub.net>",
+  "license": "UNLICENSED",
+  "scripts": {
+    "dev": "vite dev --port 3000",
+    "build": "vite build",
+    "start": "node .output/server/index.mjs",
+    "serve": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@tanstack/react-router": "^1.95.0",
+    "@tanstack/react-start": "^1.95.0",
+    "@xyflow/react": "^12.4.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "zustand": "^5.0.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.16",
+    "@tailwindcss/vite": "^4.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^6.0.0",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.7.3",
+    "vite": "^8.0.0",
+    "vite-tsconfig-paths": "^5.1.4"
+  }
+}
