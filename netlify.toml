@@ -1,0 +1,41 @@
+# Netlify — PurpleBreachNode
+# The manual is fully prerendered (SSG), so we ship the static client bundle.
+# No serverless function needed: every route is static HTML.
+
+[build]
+  command = "pnpm build"
+  publish = "dist/client"
+
+[build.environment]
+  NODE_VERSION = "22"
+  PNPM_VERSION = "10"
+  # Keep the bundled Chromium out of CI installs; we don't need it to build.
+  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD = "1"
+
+# Canonical entry: "/" → default locale (fr-CA).
+[[redirects]]
+  from = "/"
+  to = "/fr"
+  status = 302
+  force = true
+
+# Fingerprinted build assets (hashed filenames): cache hard.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Brand assets (WebP) are NOT fingerprinted — shorter cache. More specific
+# path, defined later, so it overrides the rule above for these files.
+[[headers]]
+  for = "/assets/brand/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+# Baseline security headers (static site, no inline-eval needed at runtime).
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
