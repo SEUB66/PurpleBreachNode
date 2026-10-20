@@ -1,10 +1,6 @@
-import {
-  HeadContent,
-  Outlet,
-  Scripts,
-  createRootRoute,
-} from '@tanstack/react-router'
+import { HeadContent, Outlet, Scripts, createRootRoute } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
+import { Background } from '~/components/Background'
 import appCss from '~/styles/app.css?url'
 
 export const Route = createRootRoute({
@@ -12,24 +8,23 @@ export const Route = createRootRoute({
     meta: [
       { charSet: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { name: 'theme-color', content: '#140826' },
+      { name: 'theme-color', content: '#0c0518' },
       { title: 'PurpleBreachNode — The Offensive Security Field Manual' },
       {
         name: 'description',
         content:
-          'Offensive-security field manual for Kali Linux — bilingual (fr-CA / en). Understand, test and defend. By Sébastien Germain · SEUB.',
+          'Offensive-security field manual for Kali Linux — bilingual (fr-CA / en). By Sébastien Germain · SEUB.',
       },
-      { name: 'author', content: 'Sébastien Germain — SEUB · seub.net' },
     ],
     links: [
       { rel: 'stylesheet', href: appCss },
-      { rel: 'icon', type: 'image/webp', href: '/assets/brand/seub-logo-128.webp' },
+      { rel: 'icon', type: 'image/webp', href: '/assets/brand/logo-128.webp' },
       { rel: 'apple-touch-icon', href: '/assets/brand/apple-touch-icon.png' },
       { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
       { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' },
       {
         rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Share+Tech+Mono&family=Orbitron:wght@500;700;900&display=swap',
+        href: 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap',
       },
     ],
   }),
@@ -39,6 +34,7 @@ export const Route = createRootRoute({
 function RootComponent() {
   return (
     <RootDocument>
+      <Background />
       <Outlet />
     </RootDocument>
   )
@@ -46,7 +42,7 @@ function RootComponent() {
 
 function RootDocument({ children }: { children: ReactNode }) {
   return (
-    <html lang="fr" className="dark">
+    <html lang="fr">
       <head>
         <HeadContent />
       </head>
