@@ -1,10 +1,12 @@
 import { useState, type ReactNode } from 'react'
-import { motion, useScroll, useSpring, AnimatePresence } from 'motion/react'
+import { motion, useScroll, useSpring } from 'motion/react'
 import type { Block, Locale, ModuleDoc } from '~/content/module'
 import { BOX } from '~/content/module'
 import { LevelBadge } from './LevelBadge'
 import { Callout, ReadBox } from './Callout'
 import { Terminal } from './Terminal'
+import { ClientOnly } from './ClientOnly'
+import { BreachTopology } from './network/BreachTopology'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
@@ -145,6 +147,44 @@ export function ModuleView({ doc }: { doc: ModuleDoc }) {
           </p>
           <p className="mt-2 mb-0 leading-relaxed text-ink">{doc.objective[locale]}</p>
         </motion.div>
+
+        {/* ---- Live Network Map (killer feature) ---- */}
+        <motion.section
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.25 }}
+          transition={{ duration: 0.7, ease: EASE }}
+          className="relative left-1/2 mt-10 w-[94vw] max-w-[1180px] -translate-x-1/2"
+        >
+          <div className="glass glass-accent overflow-hidden rounded-3xl">
+            <div className="flex items-center gap-3 border-b border-white/10 px-5 py-3">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-magenta opacity-70" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-magenta" />
+              </span>
+              <h3 className="text-sm font-semibold tracking-tight">
+                Live Network Map
+                <span className="ml-2 font-mono text-xs font-normal text-ink-faint">
+                  {locale === 'fr' ? 'topologie du labo · interactive' : 'lab topology · interactive'}
+                </span>
+              </h3>
+              <span className="ml-auto font-mono text-[0.68rem] text-cyan">
+                &lt;BreachTopology /&gt;
+              </span>
+            </div>
+            <div className="h-[520px] w-full bg-[#0a0416]">
+              <ClientOnly
+                fallback={
+                  <div className="grid h-full place-items-center font-mono text-sm text-ink-faint">
+                    booting topology…
+                  </div>
+                }
+              >
+                <BreachTopology />
+              </ClientOnly>
+            </div>
+          </div>
+        </motion.section>
 
         {/* body */}
         <div className="prose-pbn mt-4 max-w-none">

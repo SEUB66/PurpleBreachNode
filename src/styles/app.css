@@ -317,6 +317,47 @@
   }
 }
 
+/* ---------------------------------------------------------------------
+   React Flow — synthwave theming of the built-in controls / minimap
+   --------------------------------------------------------------------- */
+@layer components {
+  .react-flow__controls.pbn-rf-controls {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px -14px rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .pbn-rf-controls .react-flow__controls-button {
+    background: rgba(20, 10, 38, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    color: var(--color-cyan);
+    width: 30px;
+    height: 30px;
+    transition: background 0.25s ease, color 0.25s ease;
+  }
+  .pbn-rf-controls .react-flow__controls-button:hover {
+    background: rgba(255, 45, 149, 0.22);
+    color: #fff;
+  }
+  .pbn-rf-controls .react-flow__controls-button svg {
+    fill: currentColor;
+  }
+  .react-flow__attribution {
+    display: none;
+  }
+  .react-flow__edge-path {
+    transition: stroke 0.35s ease, stroke-width 0.35s ease;
+  }
+  .react-flow__handle {
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  .react-flow__node:hover .react-flow__handle {
+    opacity: 0.6;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
